@@ -67,13 +67,13 @@ public actor MockTVDriver: TVDriver {
     }
 
     public func send(_ key: RemoteKey, action: KeyAction) async throws {
-        try await simulate(.key(key, action))
-        if key == .backspace, action == .press, !typedText.isEmpty { typedText.removeLast() }
+        try await simulate(.key(key, action)) {
+            if key == .backspace, action == .press, !typedText.isEmpty { typedText.removeLast() }
+        }
     }
 
     public func sendText(_ text: String) async throws {
-        try await simulate(.text(text))
-        typedText += text
+        try await simulate(.text(text)) { typedText += text }
     }
 
     public func swipe(dx: Double, dy: Double) async throws {
@@ -104,8 +104,10 @@ public actor MockTVDriver: TVDriver {
         broadcaster.update(.disconnected)
     }
 
-    private func simulate(_ command: RemoteCommand) async throws {
+    /// Applies the effect and records the command together, so observers never see one without the other.
+    private func simulate(_ command: RemoteCommand, effect: () -> Void = {}) async throws {
         guard broadcaster.current == .connected else { throw DriverError.connectionLost }
+        effect()
         sentCommands.append(command)
         try await Task.sleep(for: latency)
     }
