@@ -77,7 +77,7 @@ struct RokuDeviceInfo: Sendable, Equatable {
             platform: .roku,
             host: host,
             port: port,
-            mac: wifiMAC ?? ethernetMAC,
+            mac: [wifiMAC, ethernetMAC].compactMap { $0.flatMap(DeviceDescriptor.normalizeMAC) }.first,
             model: modelName
         )
     }
