@@ -36,6 +36,23 @@ open Remote.xcodeproj
 3. Run on an iPhone on the same Wi-Fi as your TV. The first launch asks for Local Network
    access; it's required.
 
+### Install without a Mac (Windows)
+
+CI builds an unsigned `Remote.ipa` on every push. Sideloading re-signs it with your Apple ID.
+
+1. Open the latest green run under **Actions** on GitHub and download the **Remote-ipa**
+   artifact. Unzip it to get `Remote.ipa`.
+2. Install the non-Microsoft-Store versions of **iTunes** and **iCloud** from apple.com.
+   Windows needs them to talk to the iPhone.
+3. Install [Sideloadly](https://sideloadly.io). Plug in the iPhone, trust the computer,
+   drop `Remote.ipa` in, enter your Apple ID, and press Start.
+4. On the iPhone, turn on **Settings → Privacy & Security → Developer Mode** (iOS 16+) and
+   restart. Then open **Settings → General → VPN & Device Management** and trust your Apple ID.
+5. Launch Remote and allow **Local Network** access.
+
+With a free Apple ID the app expires after 7 days. Re-run step 3 to renew it, or use
+AltStore, which refreshes over Wi-Fi.
+
 The **Demo TV** (simulated, no network) appears in simulator and Debug builds, or in any
 build launched with `-mockTV`, so the whole UI can be tried without hardware.
 

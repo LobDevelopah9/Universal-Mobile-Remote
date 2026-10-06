@@ -9,3 +9,5 @@ xcodebuild.log
 __pycache__/
 *.pyc
 .venv/
+build/
+build-ipa.log
