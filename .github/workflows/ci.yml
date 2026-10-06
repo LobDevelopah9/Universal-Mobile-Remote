@@ -65,6 +65,18 @@ jobs:
         if: hashFiles('project.yml') != ''
         run: scripts/ci-app.sh
 
+      - name: Build unsigned IPA for sideloading
+        if: hashFiles('project.yml') != ''
+        run: scripts/build-ipa.sh
+
+      - name: Upload IPA
+        if: hashFiles('project.yml') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: Remote-ipa
+          path: build/Remote.ipa
+          retention-days: 30
+
       - name: Upload xcodebuild log
         if: failure() && hashFiles('xcodebuild.log') != ''
         uses: actions/upload-artifact@v4
