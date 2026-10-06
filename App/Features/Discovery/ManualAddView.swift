@@ -14,7 +14,7 @@ struct ManualAddView: View {
             Section {
                 TextField("192.168.1.20", text: $address)
                     .keyboardType(.decimalPad)
-                    .textContentType(.none)
+                    .textContentType(nil)
                     .autocorrectionDisabled()
                     .focused($focused)
                     .font(.body.monospacedDigit())

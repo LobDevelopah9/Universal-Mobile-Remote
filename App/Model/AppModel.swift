@@ -86,7 +86,7 @@ final class AppModel {
     /// Tapping a TV in a list: saved ones connect straight away, new ones pair first.
     func select(_ device: DeviceDescriptor) {
         isAddingTV = false
-        if store.contains(device.id), device.platform.pairingStyle == .none || store.credentials.credentials(for: device.id) != nil {
+        if store.contains(device.id), device.platform.pairingStyle == .automatic || store.credentials.credentials(for: device.id) != nil {
             activate(device)
         } else {
             pairingTarget = device

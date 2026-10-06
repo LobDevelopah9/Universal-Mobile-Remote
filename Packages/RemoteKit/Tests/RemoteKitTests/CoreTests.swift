@@ -21,11 +21,14 @@ struct CoreTests {
         var pad = TouchpadInterpreter(sensitivity: 1)
         pad.begin()
         let step = pad.stepDistance
-        #expect(pad.update(translationX: step * 0.5, translationY: 0).isEmpty)
-        #expect(pad.update(translationX: step * 1.1, translationY: 4) == [.right])
-        #expect(pad.update(translationX: step * 1.5, translationY: 4).isEmpty)
-        #expect(pad.update(translationX: step * 3.2, translationY: 4) == [.right, .right])
-        #expect(pad.update(translationX: step * 3.2, translationY: -step * 1.4) == [.up])
+        let steps = [
+            pad.update(translationX: step * 0.5, translationY: 0),
+            pad.update(translationX: step * 1.1, translationY: 4),
+            pad.update(translationX: step * 1.5, translationY: 4),
+            pad.update(translationX: step * 3.2, translationY: 4),
+            pad.update(translationX: step * 3.2, translationY: -step * 1.4),
+        ]
+        #expect(steps == [[], [.right], [], [.right, .right], [.up]])
     }
 
     @Test func touchpadSensitivityScalesStep() {
@@ -84,8 +87,10 @@ struct CoreTests {
         let stream = broadcaster.stream()
         broadcaster.send(.connected)
         var iterator = stream.makeAsyncIterator()
-        #expect(await iterator.next() == .connecting)
-        #expect(await iterator.next() == .connected)
+        let first = await iterator.next()
+        let second = await iterator.next()
+        #expect(first == .connecting)
+        #expect(second == .connected)
     }
 
     @Test func commandQueuePreservesOrderUnderBursts() async throws {

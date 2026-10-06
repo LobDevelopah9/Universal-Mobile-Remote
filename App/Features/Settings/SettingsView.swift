@@ -95,12 +95,12 @@ struct DeviceDetailView: View {
                     }
                 }
                 Section {
-                    if device.platform.pairingStyle != .none {
+                    if device.platform.pairingStyle != .automatic {
                         Button("Pair Again") { model.repair(device) }
                     }
                     Button("Forget This TV", role: .destructive) { confirmingForget = true }
                 } footer: {
-                    if device.platform.pairingStyle != .none {
+                    if device.platform.pairingStyle != .automatic {
                         Text("Pair again if the TV was reset or stopped responding to this phone.")
                     }
                 }

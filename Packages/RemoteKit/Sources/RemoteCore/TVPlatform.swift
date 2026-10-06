@@ -41,7 +41,7 @@ public enum TVPlatform: String, Codable, Sendable, CaseIterable, Hashable {
 
     public var pairingStyle: PairingStyle {
         switch self {
-        case .roku, .demo: .none
+        case .roku, .demo: .automatic
         case .androidTV: .codeOnTV(length: 6, alphabet: .hexadecimal)
         case .samsung, .lg: .acceptOnTV
         case .sony, .vizio: .codeOnTV(length: 4, alphabet: .numeric)
@@ -61,7 +61,7 @@ public enum TVPlatform: String, Codable, Sendable, CaseIterable, Hashable {
 
 public enum PairingStyle: Sendable, Equatable {
     /// No pairing step, e.g. Roku ECP.
-    case none
+    case automatic
     /// The TV shows a code that the user types into the phone.
     case codeOnTV(length: Int, alphabet: CodeAlphabet)
     /// The TV shows an allow/deny prompt.

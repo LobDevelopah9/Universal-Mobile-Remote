@@ -45,7 +45,7 @@ final class PairingViewModel {
         }
         self.driver = driver
         switch device.platform.pairingStyle {
-        case .none:
+        case .automatic:
             step = .connecting
             await finish(code: nil)
         case .codeOnTV:

@@ -10,14 +10,17 @@ struct DiscoveryTests {
         let fromProbe = DeviceDescriptor(name: "Android TV (192.168.1.20)", platform: .androidTV, host: "192.168.1.20", port: 6466)
         let fromBonjour = DeviceDescriptor(name: "Living Room TV", platform: .androidTV, host: "192.168.1.20", port: 6466, mac: "AA:BB:CC:DD:EE:FF")
 
-        #expect(merger.insert(fromProbe))
-        #expect(merger.insert(fromBonjour))
+        let insertedProbe = merger.insert(fromProbe)
+        let mergedBonjour = merger.insert(fromBonjour)
+        #expect(insertedProbe)
+        #expect(mergedBonjour)
         #expect(merger.devices.count == 1)
         #expect(merger.devices[0].name == "Living Room TV")
         #expect(merger.devices[0].id == "androidTV/mac/aa:bb:cc:dd:ee:ff")
 
         // A later placeholder sighting must not overwrite the real name or the stable ID.
-        #expect(!merger.insert(fromProbe))
+        let changedAgain = merger.insert(fromProbe)
+        #expect(!changedAgain)
         #expect(merger.devices[0].name == "Living Room TV")
         #expect(merger.devices[0].id == "androidTV/mac/aa:bb:cc:dd:ee:ff")
     }
@@ -28,7 +31,8 @@ struct DiscoveryTests {
         var moved = roku
         moved.host = "10.0.0.9"
         merger.insert(roku)
-        #expect(merger.insert(moved))
+        let followed = merger.insert(moved)
+        #expect(followed)
         #expect(merger.devices.map(\.host) == ["10.0.0.9"])
     }
 

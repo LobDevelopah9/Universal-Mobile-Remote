@@ -56,7 +56,6 @@ struct TouchpadView: View {
             .accessibilityElement()
             .accessibilityLabel("Touchpad")
             .accessibilityHint("Double-tap to select. Use the actions rotor to move.")
-            .accessibilityAddTraits(.allowsDirectInteraction)
             .accessibilityAction { session.press(.select) }
             .accessibilityAction(named: "Up") { session.press(.up) }
             .accessibilityAction(named: "Down") { session.press(.down) }

@@ -1,3 +1,4 @@
+import Foundation
 import RemoteCore
 import RemoteDrivers
 import Testing
