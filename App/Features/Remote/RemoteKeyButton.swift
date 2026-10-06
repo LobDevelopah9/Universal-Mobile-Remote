@@ -31,14 +31,7 @@ struct RemoteKeyButton: View {
 
     var body: some View {
         let size = diameter * min(scale, 1.4)
-        Image(systemName: systemImage)
-            .font(.system(size: size * 0.34, weight: .semibold))
-            .frame(width: size, height: size)
-            .foregroundStyle(prominent ? AnyShapeStyle(.white) : AnyShapeStyle(.primary))
-            .background {
-                Circle().fill(prominent ? AnyShapeStyle(.tint) : AnyShapeStyle(Color.remoteKey))
-            }
-            .overlay { Circle().strokeBorder(.white.opacity(isPressed ? 0.25 : 0.06), lineWidth: 1) }
+        face(size: size)
             .scaleEffect(isPressed ? 0.9 : 1)
             .brightness(isPressed ? 0.12 : 0)
             .animation(.spring(response: 0.18, dampingFraction: 0.6), value: isPressed)
@@ -54,6 +47,18 @@ struct RemoteKeyButton: View {
             .accessibilityLabel(key.accessibilityLabel)
             .accessibilityAddTraits(.isButton)
             .accessibilityAction { session.press(key) }
+    }
+
+    private func face(size: CGFloat) -> some View {
+        let fill: Color = prominent ? .accentColor : .remoteKey
+        let ink: Color = prominent ? .white : .primary
+        let rim = Color.white.opacity(isPressed ? 0.25 : 0.06)
+        return Image(systemName: systemImage)
+            .font(.system(size: size * 0.34, weight: .semibold))
+            .foregroundStyle(ink)
+            .frame(width: size, height: size)
+            .background(Circle().fill(fill))
+            .overlay(Circle().strokeBorder(rim, lineWidth: 1))
     }
 
     private func touchDown() {

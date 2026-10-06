@@ -9,50 +9,12 @@ struct TouchpadView: View {
     @State private var touchLocation: CGPoint?
     @State private var touchStart: Date?
 
+    private static let shape = RoundedRectangle(cornerRadius: 32, style: .continuous)
+
     var body: some View {
-        RoundedRectangle(cornerRadius: 32, style: .continuous)
-            .fill(Color.remoteSurface)
-            .overlay {
-                RoundedRectangle(cornerRadius: 32, style: .continuous)
-                    .strokeBorder(.white.opacity(0.06), lineWidth: 1)
-            }
-            .overlay {
-                if let touchLocation {
-                    Circle()
-                        .fill(.tint.opacity(0.25))
-                        .frame(width: 84, height: 84)
-                        .blur(radius: 6)
-                        .position(touchLocation)
-                        .transition(.opacity)
-                } else {
-                    VStack(spacing: 6) {
-                        Image(systemName: "hand.draw")
-                            .font(.title2)
-                        Text("Swipe to move · Tap to select")
-                            .font(.footnote)
-                    }
-                    .foregroundStyle(.tertiary)
-                    .allowsHitTesting(false)
-                }
-            }
-            .contentShape(RoundedRectangle(cornerRadius: 32, style: .continuous))
-            .gesture(
-                DragGesture(minimumDistance: 0, coordinateSpace: .local)
-                    .onChanged { value in
-                        if touchStart == nil {
-                            touchStart = .now
-                            session.touchpadBegan()
-                        }
-                        touchLocation = value.location
-                        session.touchpadMoved(value.translation)
-                    }
-                    .onEnded { value in
-                        let duration = Date.now.timeIntervalSince(touchStart ?? .now)
-                        session.touchpadEnded(value.translation, duration: duration)
-                        touchStart = nil
-                        withAnimation(.easeOut(duration: 0.25)) { touchLocation = nil }
-                    }
-            )
+        surface
+            .contentShape(Self.shape)
+            .gesture(drag)
             .accessibilityElement()
             .accessibilityLabel("Touchpad")
             .accessibilityHint("Double-tap to select. Use the actions rotor to move.")
@@ -61,6 +23,52 @@ struct TouchpadView: View {
             .accessibilityAction(named: "Down") { session.press(.down) }
             .accessibilityAction(named: "Left") { session.press(.left) }
             .accessibilityAction(named: "Right") { session.press(.right) }
+    }
+
+    private var surface: some View {
+        Self.shape
+            .fill(Color.remoteSurface)
+            .overlay { Self.shape.strokeBorder(Color.white.opacity(0.06), lineWidth: 1) }
+            .overlay { touchIndicator }
+    }
+
+    @ViewBuilder
+    private var touchIndicator: some View {
+        if let touchLocation {
+            Circle()
+                .fill(Color.accentColor.opacity(0.25))
+                .frame(width: 84, height: 84)
+                .blur(radius: 6)
+                .position(touchLocation)
+                .transition(.opacity)
+        } else {
+            VStack(spacing: 6) {
+                Image(systemName: "hand.draw")
+                    .font(.title2)
+                Text("Swipe to move · Tap to select")
+                    .font(.footnote)
+            }
+            .foregroundStyle(.tertiary)
+            .allowsHitTesting(false)
+        }
+    }
+
+    private var drag: some Gesture {
+        DragGesture(minimumDistance: 0, coordinateSpace: .local)
+            .onChanged { value in
+                if touchStart == nil {
+                    touchStart = .now
+                    session.touchpadBegan()
+                }
+                touchLocation = value.location
+                session.touchpadMoved(value.translation)
+            }
+            .onEnded { value in
+                let duration = Date.now.timeIntervalSince(touchStart ?? .now)
+                session.touchpadEnded(value.translation, duration: duration)
+                touchStart = nil
+                withAnimation(.easeOut(duration: 0.25)) { touchLocation = nil }
+            }
     }
 }
 
