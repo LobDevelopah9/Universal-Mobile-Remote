@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<device-info>
+	<serial-number>YN00AB123456</serial-number>
+	<vendor-name>TCL</vendor-name>
+	<model-name>65R635</model-name>
+	<is-tv>true</is-tv>
+	<wifi-mac>00:00:00:00:00:00</wifi-mac>
+	<ethernet-mac>c8:3a:6b:11:22:33</ethernet-mac>
+	<friendly-device-name>Bedroom TV</friendly-device-name>
+	<user-device-name></user-device-name>
+	<power-mode>DisplayOff</power-mode>
+</device-info>
