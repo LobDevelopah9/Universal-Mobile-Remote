@@ -10,21 +10,28 @@ struct RSAPublicNumbers: Sendable, Equatable {
 
     /// Accepts PKCS#1 `RSAPublicKey` (what `SecKeyCopyExternalRepresentation` returns)
     /// or X.509 `SubjectPublicKeyInfo` DER.
+    init(modulus: [UInt8], exponent: [UInt8]) {
+        self.modulus = modulus
+        self.exponent = exponent
+    }
+
     init(publicKeyDER: [UInt8]) throws {
-        let root = try DER.parse(publicKeyDER)
+        self = try Self.parse(publicKeyDER)
+    }
+
+    private static func parse(_ der: [UInt8]) throws -> RSAPublicNumbers {
+        let root = try DER.parse(der)
         guard case .constructed(let children) = root.content else {
             throw DriverError.protocolError("RSA key is not a SEQUENCE")
         }
-        var nodes = Array(children)
+        let nodes = Array(children)
         if nodes.count == 2, nodes[0].identifier == .sequence, nodes[1].identifier == .bitString {
             // SubjectPublicKeyInfo: unwrap the BIT STRING holding the PKCS#1 key.
             let bits = try ASN1BitString(derEncoded: nodes[1])
-            try self.init(publicKeyDER: Array(bits.bytes))
-            return
+            return try parse(Array(bits.bytes))
         }
         guard nodes.count == 2 else { throw DriverError.protocolError("RSA key has \(nodes.count) fields") }
-        modulus = try Self.unsignedInteger(nodes.removeFirst())
-        exponent = try Self.unsignedInteger(nodes.removeFirst())
+        return RSAPublicNumbers(modulus: try unsignedInteger(nodes[0]), exponent: try unsignedInteger(nodes[1]))
     }
 
     /// Reads the public key out of a DER X.509 certificate.
