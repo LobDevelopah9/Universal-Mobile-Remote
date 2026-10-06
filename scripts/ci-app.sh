@@ -16,11 +16,20 @@ sys.exit("no iPhone simulator available")
 ')
 echo "Using simulator $UDID"
 
+set +e
 xcodebuild test \
   -project Remote.xcodeproj \
   -scheme Remote \
   -destination "id=$UDID" \
   -skipPackagePluginValidation \
   CODE_SIGNING_ALLOWED=NO \
-  | tee xcodebuild.log | grep -E "error:|warning: .*(Sendable|actor)|Test (Suite|Case)|✔|✘|passed|failed|\*\* " || true
-test "${PIPESTATUS[0]}" -eq 0
+  > xcodebuild.log 2>&1
+status=$?
+set -e
+
+grep -E "error:|Test (Suite|Case)|✔|✘|\*\* (BUILD|TEST)" xcodebuild.log || true
+if [ "$status" -ne 0 ]; then
+  echo "---- last 150 lines of xcodebuild.log ----"
+  tail -150 xcodebuild.log
+fi
+exit "$status"

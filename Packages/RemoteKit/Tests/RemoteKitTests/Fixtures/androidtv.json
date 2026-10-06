@@ -1,0 +1,135 @@
+{
+  "generated_by": "tools/fixtures/gen_androidtv_fixtures.py with androidtvremote2==0.3.2",
+  "client_cert_der": "308202cd308201b5a003020102020203e8300d06092a864886f70d01010b050030143112301006035504030c0961747672656d6f7465301e170d3236313030363030343534325a170d3336313030333030343534325a30143112301006035504030c0961747672656d6f746530820122300d06092a864886f70d01010105000382010f003082010a0282010100cd09bd33c79cfe5c11b809e3b2d8bf03e90e01edd397a38ad22842268e7a088629f2bdfd5212634246090d1ff507ee9353ea970862a958de045c10063f8b70228cbdd81e0109b778046fd5bc11e406afb9a67adf42d793cc1743043bf838249868131b5df0456adb33854b73ccf6c949f2dcdedbf9d46c28273bd49a410a4832bb7fed7aeb151cd4a2499a5d2971e1f5b03e4e5b69a9f4f8df448520c3e86358c637bccea78db9b457fc2073c9759ddfbcb565c98589575e9223620842446cc80d1c7869d35a3c62871a3001ae10e6cc64c46c88fcf8ff684124a9e3696b6282faa9e98ac0fbc6252a5ab6aa71cbe11d472876c4a0abfc01207696b97fb9d4dd0203010001a3293027300f0603551d13040830060101ff02010030140603551d11040d300b820961747672656d6f7465300d06092a864886f70d01010b050003820101000a3076235e6bc73c32ee1a2cbc413b516c218e374b556ffe031ccfd08e14c9f0c19a478f4f84bbb3708f5ae55fe8af4bdc4f135c01b6aea484592dd8ad347ebd0cdcd3bfac17ab5540c5a5e68c34a193f286c6b7ac4d76f851ede382d2058f115a138560955064a2cf9de1c62bd47775b58e39949dd414c64b13b62949297672782e46bf6e3fc0725c3857c3d67e82868210b2043b28b10f058c99f91e16c526d52fe7826378f8a981f10d88b48805d62a41c9010c6aa0e05e5e2ab2f6f40555aed15347236f77421dd6051778f38402dfea21981ac5ceee559512eedc06365fbbc690f96b92fdc984b7a0a303412fb874550fc792a322db3ba8b0368d2ca4e9",
+  "server_cert_der": "308202d0308201b8a003020102020203e8300d06092a864886f70d01010b050030153113301106035504030c0a666978747572652d7476301e170d3236313030363030343534325a170d3336313030333030343534325a30153113301106035504030c0a666978747572652d747630820122300d06092a864886f70d01010105000382010f003082010a0282010100c3ce16b09263baa44dd6768aca826f415823d7838d8bd5040e8790a5527829bc986b31f4650d6088146a066ad3ee17fc9f762796435ba951e948d8f9649325ce1c859da4db500db7cde6b409a340bacd4e63b33d88ae62cefcdddabea6aabe9b9ac8eb30a95e7648733eb0d526bec4ebc71505589b2836fe8d08a75c7b18eba90f7a7a61c9b5d37f1cbed246322c076e96f8f00af297e673cf42ec69c99c06891bea78e02692dcde76281c3c1d73f27b45b397827f05bfafce30adcc1463391418831a5a6da560f158d7f91439b8d6ccddf4c8a55658c530e9b74d9cce11a5bbaca41b9322fdeb581ba437a6deea0e700b72561b99521eeb48fa055fc472cf330203010001a32a3028300f0603551d13040830060101ff02010030150603551d11040e300c820a666978747572652d7476300d06092a864886f70d01010b0500038201010032a7cbfb21f31dd65c9184e1aeea1728e2a970b48ffc9afba3b48be706c668e23775916b472e0ff0a9a737b39ee18385b45c5bc83a7e9864cd23b9fcf4c2d99404a64161f7d27ce3b283da3615b74e52b68aba7fd89f085ec4693e373566833eb69b682c7944b97d4dbf4eb2d4a9a1a8157c4819db59ce34e73b913f0f97307997d4f580c6def53222746ea7eaacea3873c0fe7f0c8c59c78eec0dae346278213fbacf2659629614144e13e43f27a66796633250ee55b33a42fd616579c098c92e237cd44d742c56ef37bc2d0bb0045c6c6c289344354c35f9fa3d541867614f99d0a2ce4f33e30c29d046cfebabf5e8a292c5d76c6788ca2888d5b29dd9f396",
+  "pairing": {
+    "code": "1CA1B2",
+    "mismatched_code": "1DA1B2",
+    "secret": "1c8627d23cacfee384177c686797f4b707375f7e9b72baf5aa56e6f5188cc592"
+  },
+  "messages": [
+    {
+      "name": "pairing_request",
+      "direction": "client_to_tv",
+      "framed": "1a080210c80152130a0961747672656d6f7465120652656d6f7465",
+      "payload": "080210c80152130a0961747672656d6f7465120652656d6f7465"
+    },
+    {
+      "name": "pairing_request_ack",
+      "direction": "tv_to_client",
+      "payload": "080210c8015a100a0e4c6976696e6720526f6f6d205456"
+    },
+    {
+      "name": "options",
+      "direction": "client_to_tv",
+      "framed": "10080210c801a201080a04080310061801",
+      "payload": "080210c801a201080a04080310061801"
+    },
+    {
+      "name": "options_from_tv",
+      "direction": "tv_to_client",
+      "payload": "080210c801a201080a04080310061801"
+    },
+    {
+      "name": "configuration",
+      "direction": "client_to_tv",
+      "framed": "10080210c801f201080a04080310061001",
+      "payload": "080210c801f201080a04080310061001"
+    },
+    {
+      "name": "configuration_ack",
+      "direction": "tv_to_client",
+      "payload": "080210c801fa0100"
+    },
+    {
+      "name": "secret",
+      "direction": "client_to_tv",
+      "framed": "2a080210c801c202220a201c8627d23cacfee384177c686797f4b707375f7e9b72baf5aa56e6f5188cc592",
+      "payload": "080210c801c202220a201c8627d23cacfee384177c686797f4b707375f7e9b72baf5aa56e6f5188cc592"
+    },
+    {
+      "name": "remote_configure_from_tv",
+      "direction": "tv_to_client",
+      "payload": "0a5708ee0412520a0a46697874757265205456120a4669787475726520436f18012201312a24636f6d2e676f6f676c652e616e64726f69642e74762e72656d6f74652e73657276696365320d352e322e343733323534313333"
+    },
+    {
+      "name": "remote_configure",
+      "direction": "client_to_tv",
+      "framed": "1e0a1c08e604121718012201312a0961747672656d6f74653205312e302e30",
+      "payload": "0a1c08e604121718012201312a0961747672656d6f74653205312e302e30"
+    },
+    {
+      "name": "remote_set_active_from_tv",
+      "direction": "tv_to_client",
+      "payload": "1200"
+    },
+    {
+      "name": "remote_set_active",
+      "direction": "client_to_tv",
+      "framed": "05120308e604",
+      "payload": "120308e604"
+    },
+    {
+      "name": "remote_ping_request",
+      "direction": "tv_to_client",
+      "payload": "42020807"
+    },
+    {
+      "name": "remote_ping_response",
+      "direction": "client_to_tv",
+      "framed": "044a020807",
+      "payload": "4a020807"
+    },
+    {
+      "name": "remote_start",
+      "direction": "tv_to_client",
+      "payload": "c202020801"
+    },
+    {
+      "name": "remote_set_volume_level",
+      "direction": "tv_to_client",
+      "payload": "92030430643817"
+    },
+    {
+      "name": "remote_ime_batch_edit_from_tv",
+      "direction": "tv_to_client",
+      "payload": "aa010408051003"
+    },
+    {
+      "name": "key_dpad_up_short",
+      "direction": "client_to_tv",
+      "framed": "06520408131003",
+      "payload": "520408131003"
+    },
+    {
+      "name": "key_dpad_center_start_long",
+      "direction": "client_to_tv",
+      "framed": "06520408171001",
+      "payload": "520408171001"
+    },
+    {
+      "name": "key_dpad_center_end_long",
+      "direction": "client_to_tv",
+      "framed": "06520408171002",
+      "payload": "520408171002"
+    },
+    {
+      "name": "key_volume_up_short",
+      "direction": "client_to_tv",
+      "framed": "06520408181003",
+      "payload": "520408181003"
+    },
+    {
+      "name": "ime_text_hello",
+      "direction": "client_to_tv",
+      "framed": "18aa0115080510031a0f0801120b080410041a0568656c6c6f",
+      "payload": "aa0115080510031a0f0801120b080410041a0568656c6c6f"
+    },
+    {
+      "name": "app_link_launch",
+      "direction": "client_to_tv",
+      "framed": "1cd205190a1768747470733a2f2f7777772e796f75747562652e636f6d",
+      "payload": "d205190a1768747470733a2f2f7777772e796f75747562652e636f6d"
+    }
+  ]
+}

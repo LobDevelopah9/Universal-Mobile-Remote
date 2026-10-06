@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<device-info>
+	<udn>29380007-0800-1025-80a4-d83154332d7e</udn>
+	<serial-number>X01900ABCDEF</serial-number>
+	<device-id>S0A3D1ABCDEF</device-id>
+	<vendor-name>Roku</vendor-name>
+	<model-number>3810X</model-number>
+	<model-name>Roku Streaming Stick+</model-name>
+	<friendly-model-name>Roku Streaming Stick+</friendly-model-name>
+	<model-region>US</model-region>
+	<is-tv>false</is-tv>
+	<is-stick>true</is-stick>
+	<supports-ethernet>false</supports-ethernet>
+	<wifi-mac>d8:31:54:33:2d:7e</wifi-mac>
+	<wifi-driver>realtek</wifi-driver>
+	<has-wifi-extender>false</has-wifi-extender>
+	<network-type>wifi</network-type>
+	<network-name>HomeNet</network-name>
+	<friendly-device-name>Living Room Roku</friendly-device-name>
+	<user-device-name>Living Room Roku</user-device-name>
+	<user-device-location>Living Room</user-device-location>
+	<software-version>12.5.0</software-version>
+	<software-build>4178</software-build>
+	<power-mode>PowerOn</power-mode>
+	<supports-find-remote>true</supports-find-remote>
+	<developer-enabled>false</developer-enabled>
+	<search-enabled>true</search-enabled>
+	<voice-search-enabled>true</voice-search-enabled>
+	<supports-ecs-textedit>true</supports-ecs-textedit>
+	<supports-ecs-microphone>true</supports-ecs-microphone>
+</device-info>

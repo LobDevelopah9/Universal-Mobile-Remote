@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      FAKE_ROKU_PORT: "8060"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select newest Xcode
+        run: |
+          ls -d /Applications/Xcode*.app
+          XCODE=$(ls -d /Applications/Xcode_*.app | grep -vi beta | sort -V | tail -1)
+          sudo xcode-select -s "$XCODE"
+          xcodebuild -version
+          swift --version
+
+      - name: Install tools
+        run: brew install xcodegen swift-protobuf
+
+      - name: Generate protobuf sources
+        run: scripts/gen-protos.sh
+
+      - name: Upload generated protobuf sources
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-protos
+          path: Packages/RemoteKit/Sources/RemoteDrivers/AndroidTV/Generated/
+
+      - name: Cache SwiftPM build
+        uses: actions/cache@v4
+        with:
+          path: Packages/RemoteKit/.build
+          key: spm-${{ runner.os }}-${{ hashFiles('Packages/RemoteKit/Package.swift', 'Packages/RemoteKit/Package.resolved') }}
+
+      - name: Start fake Roku
+        run: |
+          python3 tools/fake_tv/roku_ecp.py --port "$FAKE_ROKU_PORT" &
+          for i in $(seq 1 30); do
+            curl -sf "http://127.0.0.1:$FAKE_ROKU_PORT/query/device-info" > /dev/null && exit 0
+            sleep 0.5
+          done
+          echo "fake Roku did not start" && exit 1
+
+      - name: Package tests (RemoteKit, macOS)
+        working-directory: Packages/RemoteKit
+        run: swift test
+
+      - name: Generate Xcode project
+        if: hashFiles('project.yml') != ''
+        run: xcodegen generate
+
+      - name: Build and test app (iOS Simulator)
+        if: hashFiles('project.yml') != ''
+        run: scripts/ci-app.sh
+
+      - name: Upload xcodebuild log
+        if: failure() && hashFiles('xcodebuild.log') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcodebuild-log
+          path: xcodebuild.log
+
+      - name: Generated sources are committed
+        run: |
+          changes=$(git status --porcelain -- Packages/RemoteKit/Sources/RemoteDrivers/AndroidTV/Generated)
+          if [ -n "$changes" ]; then
+            echo "$changes"
+            echo "::error::Generated protobuf sources differ from what is committed. Run scripts/gen-protos.sh or download the generated-protos artifact."
+            exit 1
+          fi
