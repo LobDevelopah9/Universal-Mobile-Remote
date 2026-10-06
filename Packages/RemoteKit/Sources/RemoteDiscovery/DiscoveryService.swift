@@ -55,10 +55,12 @@ public actor DiscoveryService {
 
         let sources = sources
         runTask = Task { [weak self] in
+            // Held strongly while sources run; `stop()` cancels this task.
+            guard let self else { return }
             await withTaskGroup(of: Void.self) { group in
                 for source in sources {
                     group.addTask {
-                        await source.run { event in await self?.receive(event) }
+                        await source.run { event in await self.receive(event) }
                     }
                 }
             }

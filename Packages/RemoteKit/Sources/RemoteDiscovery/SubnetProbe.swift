@@ -2,6 +2,7 @@ import Darwin
 import Foundation
 import Network
 import RemoteCore
+import RemoteDrivers
 
 /// One local IPv4 interface, as host-order integers.
 public struct IPv4Interface: Sendable, Equatable {

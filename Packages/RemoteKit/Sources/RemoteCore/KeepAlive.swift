@@ -50,8 +50,9 @@ public actor KeepAlive {
         }
         let monitor = NWPathMonitor()
         monitor.pathUpdateHandler = { [weak self] path in
+            guard let self else { return }
             let usable = path.status == .satisfied
-            Task { await self?.pathChanged(usable: usable) }
+            Task { await self.pathChanged(usable: usable) }
         }
         monitor.start(queue: DispatchQueue(label: "remote.keepalive.path"))
         pathMonitor = monitor
