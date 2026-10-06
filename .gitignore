@@ -1,0 +1,11 @@
+.DS_Store
+.build/
+.swiftpm/
+DerivedData/
+xcuserdata/
+*.xcodeproj/
+!Packages/**/Package.resolved
+xcodebuild.log
+__pycache__/
+*.pyc
+.venv/
