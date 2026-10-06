@@ -14,7 +14,7 @@ struct RemoteViewModelTests {
         try await driver.connect()
         let session = RemoteViewModel(device: MockTVDriver.demoDevice, driver: driver, alreadyConnected: true)
         session.start()
-        try await waitUntil { session.state == .connected && !session.capabilities.isEmpty }
+        try await waitUntil { session.state == .connected }
         return (session, driver)
     }
 
@@ -68,6 +68,7 @@ struct RemoteViewModelTests {
 
     @Test func capabilitiesComeFromTheDriver() async throws {
         let (session, _) = try await makeSession(capabilities: [.dpad, .volume])
+        try await waitUntil { session.capabilities == [.dpad, .volume] }
         #expect(session.capabilities == [.dpad, .volume])
         #expect(session.apps.isEmpty)
         session.close()
